@@ -47,6 +47,12 @@ return [
             'level' => 'debug',
         ],
 
+        'file_loading_errors' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/laravel.log'),
+            'level' => 'warning'
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
