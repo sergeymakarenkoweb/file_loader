@@ -7,7 +7,7 @@ namespace App\Core\Services;
 use App\Core\Data\ImageData;
 use App\Core\Data\ImageGroupData;
 use App\Core\Data\SizeData;
-use App\Core\Repository\AlbumRepository;
+use App\Core\Repositories\AlbumRepository;
 use Illuminate\Support\Collection;
 
 class AlbumService

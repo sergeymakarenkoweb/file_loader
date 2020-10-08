@@ -8,7 +8,7 @@ use App\Core\Data\ImageData;
 use App\Core\Data\ImageGroupData;
 use App\Core\Data\SizeData;
 use App\Core\Models\Size;
-use App\Core\Repository\SizeRepository;
+use App\Core\Repositories\SizeRepository;
 use Illuminate\Support\Collection;
 
 class ImageFactory

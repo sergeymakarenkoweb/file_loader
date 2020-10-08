@@ -5,8 +5,8 @@ namespace App\Core\Services;
 
 
 use App\Core\Data\ImageData;
-use App\Core\Repository\ImageRepository;
-use App\Core\Repository\StorageRepository;
+use App\Core\Repositories\ImageRepository;
+use App\Core\Repositories\StorageRepository;
 use Exception;
 use Illuminate\Support\Collection;
 

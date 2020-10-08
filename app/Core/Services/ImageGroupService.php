@@ -5,9 +5,9 @@ namespace App\Core\Services;
 
 
 use App\Core\Data\ImageGroupData;
-use App\Core\Repository\ImageGroupRepository;
-use App\Core\Repository\ImageRepository;
-use App\Core\Repository\StorageRepository;
+use App\Core\Repositories\ImageGroupRepository;
+use App\Core\Repositories\ImageRepository;
+use App\Core\Repositories\StorageRepository;
 use Illuminate\Support\Collection;
 
 class ImageGroupService

@@ -7,7 +7,7 @@ namespace App\Core\Services;
 use App\Core\Connectors\FacebookConnector;
 use App\Core\Data\InstagramMediaData;
 use App\Core\Models\InstagramMedia;
-use App\Core\Repository\InstagramRepository;
+use App\Core\Repositories\InstagramRepository;
 use Illuminate\Support\Collection;
 
 class InstagramService

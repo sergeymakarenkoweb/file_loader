@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Core\Repository;
+namespace App\Core\Repositories;
 
 
 use Illuminate\Database\DatabaseManager;
