@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\InstagramController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('/v1')->group(function () {
-   Route::get('/instagram/media', [InstagramController::class, 'getMedia']);
-   Route::get('/instagram/refresh', [InstagramController::class, 'refreshMedia']);
+    Route::prefix('/instagram')->group(function() {
+        Route::get('/media', [InstagramController::class, 'getMedia']);
+        Route::get('/refresh', [InstagramController::class, 'refreshMedia']);
+    });
+    Route::prefix('/contact')->group(function () {
+        Route::post('/', [ContactController::class, 'add']);
+    });
 });

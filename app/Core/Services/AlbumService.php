@@ -35,8 +35,8 @@ class AlbumService
      */
     public function attachGroups(string $albumCode, Collection $groups)
     {
-        $groups->each(function (ImageGroupData $groupData, $key) use ($albumCode) {
-           $this->albumRepository->attachGroup($albumCode, $groupData->code, $key);
+        $groups->each(function (ImageGroupData $groupData, $key) use ($albumCode, $groups) {
+            $this->albumRepository->attachGroup($albumCode, $groupData->code, abs($key - $groups->count()));
         });
     }
 

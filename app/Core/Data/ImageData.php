@@ -5,9 +5,10 @@ namespace App\Core\Data;
 
 
 use App\Core\Models\Image;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
-class ImageData
+class ImageData implements Arrayable
 {
     public string $groupCode;
     public string $filePath;
@@ -59,5 +60,15 @@ class ImageData
         return $models->map(function (Image $image) {
             return static::makeFromModel($image);
         });
+    }
+
+    public function toArray()
+    {
+        return [
+            'group' => $this->groupCode,
+            'path' => $this->filePath,
+            'contents' => $this->contents,
+            'size' => $this->sizeCode
+        ];
     }
 }

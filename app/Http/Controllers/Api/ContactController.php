@@ -17,7 +17,7 @@ class ContactController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function contactForm(Request $request)
+    public function add(Request $request)
     {
         $data = $request->validate(
             [
@@ -26,6 +26,10 @@ class ContactController extends Controller
                 'info' => ['nullable']
             ]
         );
+
+        if ($data['info'] === null) {
+            $data['info'] = '';
+        }
 
         $result = (new Contact($data))->save();
 

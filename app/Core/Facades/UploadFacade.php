@@ -67,7 +67,7 @@ class UploadFacade
     public function updateInstagram()
     {
         /** @var Collection $media */
-        $media = $this->instagramService->getMediaFromFacebook()->chunk(6)->first()->reverse();
+        $media = $this->instagramService->getMediaFromFacebook()->chunk(6)->first();
         $paths = $media->map(function (InstagramMediaData $instagramMediaData) {
             return !empty($instagramMediaData->thumbnailUrl) ? $instagramMediaData->thumbnailUrl : $instagramMediaData->mediaUrl;
         });

@@ -12,10 +12,12 @@ class StorageRepository
 {
 
     protected string $env;
+    protected string $baseUrl;
 
     public function __construct()
     {
         $this->env = config('app.env');
+        $this->baseUrl = config('filesystems.disks.do.base_path');
     }
 
     /**
@@ -42,7 +44,12 @@ class StorageRepository
      */
     public function getFile(string $path): string
     {
-        return Storage::cloud()->get($this->pathWithEnv($path));
+        return Storage::cloud()->get($path);
+    }
+
+    public function getFullPath(string $path)
+    {
+        return "{$this->baseUrl}/{$this->env}/$path";
     }
 
     /**

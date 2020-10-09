@@ -5,9 +5,11 @@ namespace App\Core\Services;
 
 
 use App\Core\Connectors\FacebookConnector;
+use App\Core\Data\ImageData;
 use App\Core\Data\InstagramMediaData;
 use App\Core\Models\InstagramMedia;
 use App\Core\Repositories\InstagramRepository;
+use App\Core\Repositories\StorageRepository;
 use Illuminate\Support\Collection;
 
 class InstagramService
@@ -15,16 +17,36 @@ class InstagramService
 
     protected FacebookConnector $facebookConnector;
     protected InstagramRepository $instagramRepository;
+    protected StorageRepository $storageRepository;
 
     /**
      * InstagramService constructor.
      * @param FacebookConnector $facebookConnector
      * @param InstagramRepository $instagramRepository
+     * @param StorageRepository $storageRepository
      */
-    public function __construct(FacebookConnector $facebookConnector, InstagramRepository $instagramRepository)
+    public function __construct(FacebookConnector $facebookConnector,
+        InstagramRepository $instagramRepository,
+        StorageRepository $storageRepository)
     {
         $this->facebookConnector = $facebookConnector;
         $this->instagramRepository = $instagramRepository;
+        $this->storageRepository = $storageRepository;
+    }
+
+    /**
+     * @return Collection<ImageData>
+     */
+    public function getAll(): Collection
+    {
+        $result = InstagramMediaData::makeFormModels($this->instagramRepository->getAll());
+        $result->each(function (InstagramMediaData $imageMediaData) {
+            $imageMediaData->images->each(function (ImageData $imageData) {
+                $imageData->filePath = $this->storageRepository->getFullPath($imageData->filePath);
+            });
+        });
+
+        return $result;
     }
 
     /**
@@ -32,7 +54,7 @@ class InstagramService
      */
     public function getMediaFromFacebook(): Collection
     {
-        return InstagramMediaData::makeByModels($this->facebookConnector->getInstagramMedia());
+        return InstagramMediaData::makeFormModels($this->facebookConnector->getInstagramMedia());
     }
 
     /**

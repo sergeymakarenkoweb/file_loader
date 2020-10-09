@@ -5,9 +5,10 @@ namespace App\Core\Data;
 
 
 use App\Core\Models\InstagramMedia;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
-class InstagramMediaData
+class InstagramMediaData implements Arrayable
 {
 
     public string $groupCode = '';
@@ -17,12 +18,18 @@ class InstagramMediaData
     public string $mediaUrl = '';
     public string $thumbnailUrl = '';
     public string $permalink = '';
+    public Collection $images;
+
+    public function __construct()
+    {
+        $this->images = new Collection();
+    }
 
     /**
      * @param InstagramMedia $instagramMedia
      * @return InstagramMediaData
      */
-    public static function makeByModel(InstagramMedia $instagramMedia)
+    public static function makeFromModel(InstagramMedia $instagramMedia)
     {
         $instance = new static();
         $instance->groupCode = $instagramMedia->groupCode;
@@ -32,6 +39,7 @@ class InstagramMediaData
         $instance->mediaUrl = $instagramMedia->mediaUrl;
         $instance->thumbnailUrl = $instagramMedia->thumbnailUrl;
         $instance->permalink = $instagramMedia->permalink;
+        $instance->images = ImageData::makeFromModels($instagramMedia->images);
 
         return $instance;
     }
@@ -40,10 +48,31 @@ class InstagramMediaData
      * @param Collection $mediaFiles
      * @return Collection<InstagramMedia>
      */
-    public static function makeByModels(Collection $mediaFiles): Collection
+    public static function makeFormModels(Collection $mediaFiles): Collection
     {
         return $mediaFiles->map(function (InstagramMedia $instagramMedia) {
-            return static::makeByModel($instagramMedia);
+            return static::makeFromModel($instagramMedia);
         });
+    }
+
+    public function toArray()
+    {
+        $images = [];
+        /**
+         * @var ImageData $image
+         */
+        foreach ($this->images as $image) {
+            $images[$image->sizeCode] = $image->toArray();
+        }
+        return [
+            'facebook_id' => $this->facebookId,
+            'group_code' => $this->groupCode,
+            'caption' => $this->caption,
+            'media_type' => $this->mediaType,
+            'media_url' => $this->mediaUrl,
+            'thumbnailUrl' => $this->thumbnailUrl,
+            'permalink' => $this->permalink,
+            'images' => $images
+        ];
     }
 }

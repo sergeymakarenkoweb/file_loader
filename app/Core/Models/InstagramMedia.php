@@ -18,6 +18,12 @@ class InstagramMedia implements Model, Arrayable
     public string $mediaUrl = '';
     public string $thumbnailUrl = '';
     public string $permalink = '';
+    public Collection $images;
+
+    public function __construct()
+    {
+        $this->images = new Collection();
+    }
 
     /**
      * @param mixed $data
@@ -66,6 +72,11 @@ class InstagramMedia implements Model, Arrayable
         $instance->caption = $instagramMediaData->caption;
 
         return $instance;
+    }
+
+    public function addImage(Image $image)
+    {
+        $this->images->add($image);
     }
 
     public function toArray()
