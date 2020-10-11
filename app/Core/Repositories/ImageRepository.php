@@ -30,7 +30,7 @@ class ImageRepository
         $this->db->table('images')
             ->insertOrIgnore(
                 [
-                    'group_code' => $groupCode,
+                    'image_group_code' => $groupCode,
                     'size_code' => $sizeCode,
                     'path' => $path,
                 ]);

@@ -30,11 +30,11 @@ class ImageFactory
         $imageContainer = $imageGroupData->imageContainer;
         if ($size->code !== Size::ORIGINAL_SIZE_CODE) {
             $imageContainer = $imageGroupData->imageContainer->makeResize($size->width, $size->height);
-            foreach ($size->filters as $filterCode) {
-                $imageContainer = $imageContainer->makeFilter($filterCode);
+            if ($size->isBlur) {
+                $imageContainer = $imageContainer->makeBlur();
             }
         }
-        $sizePath = generate_path($imageGroupData->code, $imageGroupData->name, $imageGroupData->extension, $size->code, $size->filters->all());
+        $sizePath = generate_path($imageGroupData->code, $imageGroupData->name, $imageGroupData->extension, $size->code, true);
 
         return ImageData::make($imageGroupData->code, $sizePath, $imageContainer->getContents(), $size->code);
     }

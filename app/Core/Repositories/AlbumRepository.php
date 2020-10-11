@@ -58,7 +58,7 @@ class AlbumRepository
     public function getImages(string $code): Collection
     {
         $result = $this->db->table('images as i')
-            ->join('album_image_groups as aig', 'aig.image_group_code', '=','i.group_code')
+            ->join('album_image_groups as aig', 'aig.image_group_code', '=','i.image_group_code')
             ->select('i.*')
             ->where('aig.album_code', $code)
             ->get();
@@ -73,17 +73,13 @@ class AlbumRepository
     {
         $result = [];
         $sizes = $this->db->table('album_sizes as asi')
-            ->select('s.code', 's.width', 's.height', 'sf.filter_code')
-            ->leftJoin('size_filters as sf', 'sf.size_code', '=', 'asi.size_code')
+            ->select('s.*')
             ->join('sizes as s', 's.code', '=', 'asi.size_code')
             ->where('asi.album_code', $code)
             ->get();
         foreach ($sizes as $size) {
             if (!isset($result[$size->code])) {
                 $result[$size->code] = Size::make($size);
-            }
-            if (!empty($size->filter_code)) {
-                $result[$size->code]->addFilter($size->filter_code);
             }
         }
 

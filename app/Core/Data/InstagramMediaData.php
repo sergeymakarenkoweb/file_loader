@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 class InstagramMediaData implements Arrayable
 {
 
-    public string $groupCode = '';
+    public string $imageGroupCode = '';
     public string $facebookId = '';
     public string $caption = '';
     public string $mediaType = '';
@@ -32,7 +32,7 @@ class InstagramMediaData implements Arrayable
     public static function makeFromModel(InstagramMedia $instagramMedia)
     {
         $instance = new static();
-        $instance->groupCode = $instagramMedia->groupCode;
+        $instance->imageGroupCode = $instagramMedia->imageGroupCode;
         $instance->facebookId = $instagramMedia->facebookId;
         $instance->caption = $instagramMedia->caption;
         $instance->mediaType = $instagramMedia->mediaType;
@@ -66,7 +66,7 @@ class InstagramMediaData implements Arrayable
         }
         return [
             'facebook_id' => $this->facebookId,
-            'group_code' => $this->groupCode,
+            'image_group_code' => $this->imageGroupCode,
             'caption' => $this->caption,
             'media_type' => $this->mediaType,
             'media_url' => $this->mediaUrl,

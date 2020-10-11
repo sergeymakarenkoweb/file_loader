@@ -4,7 +4,6 @@
 namespace App\Core\Imagick;
 
 
-use App\Core\Factories\FilterStrategyFactory;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Imagick;
@@ -40,10 +39,11 @@ class ImageContainer
         return $instance;
     }
 
-    public function makeFilter(string $filterCode): ImageContainer
+    public function makeBlur(): ImageContainer
     {
         $instance = new self();
-        $instance->imagick = FilterStrategyFactory::make($filterCode)->filter($this->imagick->getImage());
+        $instance->imagick =  $this->imagick->getImage();
+        $instance->imagick->blurImage(15, 3);
 
         return $instance;
     }
@@ -77,25 +77,5 @@ class ImageContainer
             . $imageContainer->imagick->getImageWidth()
             . $imageContainer->imagick->getImageHeight()
             . $permission);
-    }
-
-    /**
-     * @param string $groupCode
-     * @param string $filename
-     * @param string $extension
-     * @param string $size
-     * @param string[] $filterCodes
-     * @return string
-     */
-    public static function generatePath(string $groupCode, string $filename, string $extension, string $size, array $filterCodes)
-    {
-        $path = "{$groupCode}/{$filename}";
-        if ($size !== 'original') {
-            $path .= "_{$size}";
-        }
-        foreach ($filterCodes as $filter) {
-            $path .= "_{$filter}";
-        }
-        return "{$path}.{$extension}";
     }
 }

@@ -43,7 +43,7 @@ class ImageData implements Arrayable
     public static function makeFromModel(Image $image): ImageData
     {
         $instance = new ImageData();
-        $instance->groupCode = $image->groupCode;
+        $instance->groupCode = $image->imageGroupCode;
         $instance->filePath = $image->path;
         $instance->sizeCode = $image->sizeCode;
         $instance->contents = '';

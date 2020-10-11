@@ -31,7 +31,7 @@ class InstagramRepository
         $result = [];
         $data = $this->db->table('image_group_instagram as igi')
             ->join('album_image_groups as aig', 'aig.image_group_code', '=', 'igi.image_group_code')
-            ->join('images as i', 'i.group_code', '=', 'igi.image_group_code')
+            ->join('images as i', 'i.image_group_code', '=', 'igi.image_group_code')
             ->orderBy('aig.priority', 'desc')
             ->get();
         foreach ($data as $item) {

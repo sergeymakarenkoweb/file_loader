@@ -73,7 +73,7 @@ class UploadFacade
         });
         $imageGroupsData = $this->upload($paths, 'instagram');
         $media->each(function (InstagramMediaData $instagramMediaData, int $key) use ($imageGroupsData) {
-            $instagramMediaData->groupCode = $imageGroupsData->get($key)->code;
+            $instagramMediaData->imageGroupCode = $imageGroupsData->get($key)->code;
         });
         $this->instagramService->saveMany($media);;
 

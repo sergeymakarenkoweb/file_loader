@@ -57,17 +57,17 @@ if (! function_exists('generate_path')) {
      * @param string $filename
      * @param string $extension
      * @param string $size
-     * @param array $filterCodes
+     * @param bool $isBlur
      * @return string
      */
-    function generate_path(string $groupCode, string $filename, string $extension, string $size = 'original', array $filterCodes = [])
+    function generate_path(string $groupCode, string $filename, string $extension, string $size = 'original', bool $isBlur = false)
     {
         $path = "{$groupCode}/{$filename}";
         if ($size !== 'original') {
             $path .= "_{$size}";
         }
-        foreach ($filterCodes as $filter) {
-            $path .= "_{$filter}";
+        if ($isBlur) {
+            $path .= "_blur";
         }
         return "{$path}.{$extension}";
     }

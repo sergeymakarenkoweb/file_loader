@@ -14,12 +14,7 @@ class Size implements Model
     public string $code;
     public int $width;
     public int $height;
-    public Collection $filters;
-
-    protected function __construct()
-    {
-        $this->filters = new Collection();
-    }
+    public bool $isBlur;
 
     /**
      * @param $data
@@ -34,6 +29,7 @@ class Size implements Model
         $instance->code = $arr['code'] ?? '';
         $instance->width = $arr['width'];
         $instance->height = $arr['height'];
+        $instance->isBlur = $arr['is_blur'];
 
         return $instance;
     }
@@ -49,11 +45,4 @@ class Size implements Model
         });
     }
 
-    /**
-     * @param string $filterCode
-     */
-    public function addFilter(string $filterCode)
-    {
-        $this->filters->add($filterCode);
-    }
 }

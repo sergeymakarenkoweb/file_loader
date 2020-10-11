@@ -10,7 +10,7 @@ use stdClass;
 
 class Image implements Model
 {
-    public string $groupCode = '';
+    public string $imageGroupCode = '';
     public string $sizeCode = '';
     public string $path = '';
     public Carbon $createdAt;
@@ -25,7 +25,7 @@ class Image implements Model
         $instance = new self();
         $arr = get_array_from_object($data);
 
-        $instance->groupCode = $arr['group_code'] ?? '';
+        $instance->imageGroupCode = $arr['image_group_code'] ?? '';
         $instance->sizeCode = $arr['size_code'] ?? '';
         $instance->path = $arr['path'] ?? '';
         $instance->createdAt = isset($arr['created_at']) ? Carbon::parse($arr['created_at']) : now();

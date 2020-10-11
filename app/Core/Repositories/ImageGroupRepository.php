@@ -32,27 +32,11 @@ class ImageGroupRepository
      * @param string $code
      * @return Collection<string>
      */
-    public function getFilters(string $code): Collection
-    {
-        return $this->db->table('image_filters as if')
-            ->join('images as i', 'i.id', '=', 'if.image_id')
-            ->select('if.filter_code')
-            ->where('i.group_code', $code)
-            ->get()
-            ->map(function ($item) {
-                return $item->filter_code;
-            });
-    }
-
-    /**
-     * @param string $code
-     * @return Collection<string>
-     */
     public function getSizes(string $code): Collection
     {
         return $this->db->table('images')
             ->select('size_code')
-            ->where('group_code', $code)
+            ->where('image_group_code', $code)
             ->get()
             ->map(function ($item) {
                 return $item->size_code;
